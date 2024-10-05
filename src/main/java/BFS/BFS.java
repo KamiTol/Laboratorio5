@@ -17,7 +17,6 @@ public class BFS {
         while (!queue.isEmpty()) {
             int currentId = queue.dequeue();
             Vertex current = graph.findVertex(currentId);
-            System.out.println("Visited vertex: " + current.id);
 
             Vertex neighbor = graph.getNeighbors(current.id);
             while (neighbor != null) {
