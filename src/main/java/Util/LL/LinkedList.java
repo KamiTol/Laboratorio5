@@ -1,22 +1,22 @@
 package Util.LL;
 
-public class LinkedList {
-    public Node head;
+public class LinkedList<T> {
+    private Node<T> head;
 
     public LinkedList() {
         this.head = null;
     }
 
-    public void add(int data) {
-        Node newNode = new Node(data);
+    public void add(T data) {
+        Node<T> newNode = new Node<>(data);
         if (head == null) {
             head = newNode;
         } else {
-            Node current = head;
-            while (current.next != null) {
-                current = current.next;
+            Node<T> current = head;
+            while (current.getNext() != null) {
+                current = current.getNext();
             }
-            current.next = newNode;
+            current.setNext(newNode);
         }
     }
 
@@ -24,7 +24,11 @@ public class LinkedList {
         return head == null;
     }
 
-    public Node getHead() {
+    public Node<T> getHead() {
         return head;
+    }
+
+    public void setHead(Node<T> head) {
+        this.head = head;
     }
 }

@@ -1,68 +1,63 @@
 package Util;
 
-public class Graph {
-    private Vertex vertices;
-    private Edge edges;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Graph<T> {
+    private Map<T, Vertex<T>> vertices;
+    private Edge<T> edges;
 
     public Graph() {
-        this.vertices = null;
+        this.vertices = new HashMap<>();
         this.edges = null;
     }
 
-    public void addVertex(int id) {
-        Vertex newVertex = new Vertex(id);
-        newVertex.next = vertices;
-        vertices = newVertex;
+    public void addVertex(T id) {
+        Vertex<T> newVertex = new Vertex<>(id);
+        vertices.put(id, newVertex);
     }
 
-    public void addEdge(int sourceId, int destinationId) {
-        Vertex source = findVertex(sourceId);
-        Vertex destination = findVertex(destinationId);
+    public void addEdge(T sourceId, T destinationId) {
+        Vertex<T> source = vertices.get(sourceId);
+        Vertex<T> destination = vertices.get(destinationId);
 
         if (source == null || destination == null) {
             throw new IllegalArgumentException("Source or destination vertex not found");
         }
 
-        Edge newEdge = new Edge(source, destination);
-        newEdge.next = edges;
+        Edge<T> newEdge = new Edge<>(source, destination);
+        newEdge.setNext(edges);
         edges = newEdge;
     }
 
-    public Vertex findVertex(int id) {
-        Vertex current = vertices;
-        while (current != null) {
-            if (current.id == id) {
-                return current;
-            }
-            current = current.next;
-        }
-        return null;
+    public Vertex<T> findVertex(T id) {
+        return vertices.get(id);
     }
 
-    public Vertex getNeighbors(int id) {
-        Vertex vertex = findVertex(id);
+    public Vertex<T> getNeighbors(T id) {
+        Vertex<T> vertex = findVertex(id);
         if (vertex == null) {
             return null;
         }
 
-        Edge currentEdge = edges;
-        Vertex neighbors = null;
+        Edge<T> currentEdge = edges;
+        Vertex<T> neighbors = null;
         while (currentEdge != null) {
-            if (currentEdge.source.id == id) {
-                Vertex newNeighbor = new Vertex(currentEdge.destination.id);
-                newNeighbor.next = neighbors;
+            if (currentEdge.getSource().getId().equals(id)) {
+                Vertex<T> newNeighbor = new Vertex<>(currentEdge.getDestination().getId());
+                newNeighbor.setNext(neighbors);
                 neighbors = newNeighbor;
             }
-            currentEdge = currentEdge.next;
+            currentEdge = currentEdge.getNext();
         }
         return neighbors;
     }
 
-    public Vertex getVertices() {
+    public Map<T, Vertex<T>> getVertices() {
         return vertices;
     }
 
-    public Edge getEdges() {
+    public Edge<T> getEdges() {
         return edges;
     }
 }

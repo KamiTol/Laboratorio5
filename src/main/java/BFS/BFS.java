@@ -4,24 +4,24 @@ import Util.Graph;
 import Util.Vertex;
 import Util.Queue;
 
-public class BFS {
-    public void bfs(Graph graph, int startId) {
-        Vertex startVertex = graph.findVertex(startId);
+public class BFS<T> {
+    public void bfs(Graph<T> graph, T startId) {
+        Vertex<T> startVertex = graph.findVertex(startId);
         if (startVertex == null) {
             throw new IllegalArgumentException("Start vertex not found");
         }
 
-        Queue queue = new Queue();
+        Queue<T> queue = new Queue<>();
         queue.enqueue(startId);
 
         while (!queue.isEmpty()) {
-            int currentId = queue.dequeue();
-            Vertex current = graph.findVertex(currentId);
+            T currentId = queue.dequeue();
+            Vertex<T> current = graph.findVertex(currentId);
 
-            Vertex neighbor = graph.getNeighbors(current.id);
+            Vertex<T> neighbor = graph.getNeighbors(current.getId());
             while (neighbor != null) {
-                queue.enqueue(neighbor.id);
-                neighbor = neighbor.next;
+                queue.enqueue(neighbor.getId());
+                neighbor = neighbor.getNext();
             }
         }
     }

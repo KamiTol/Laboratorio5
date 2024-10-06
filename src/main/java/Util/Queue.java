@@ -3,24 +3,24 @@ package Util;
 import Util.LL.LinkedList;
 import Util.LL.Node;
 
-public class Queue {
-    private LinkedList list;
+public class Queue<T> {
+    private LinkedList<T> list;
 
     public Queue() {
-        this.list = new LinkedList();
+        this.list = new LinkedList<>();
     }
 
-    public void enqueue(int data) {
+    public void enqueue(T data) {
         list.add(data);
     }
 
-    public int dequeue() {
+    public T dequeue() {
         if (list.isEmpty()) {
             throw new IllegalStateException("Queue is empty");
         }
-        Node head = list.getHead();
-        int data = head.data;
-        list.head = head.next;
+        Node<T> head = list.getHead();
+        T data = head.getData();
+        list.setHead(head.getNext());
         return data;
     }
 

@@ -1,11 +1,23 @@
 package Util;
 
-public class Vertex {
-    public int id;
-    public Vertex next;
+public class Vertex<T> {
+    private T id;
+    private Vertex<T> next;
 
-    Vertex(int id) {
+    public Vertex(T id) {
         this.id = id;
         this.next = null;
+    }
+
+    public T getId() {
+        return id;
+    }
+
+    public Vertex<T> getNext() {
+        return next;
+    }
+
+    public void setNext(Vertex<T> next) {
+        this.next = next;
     }
 }
